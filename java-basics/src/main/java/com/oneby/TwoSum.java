@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * @ClassName TwoSum
- * @Description TODO
+ * @Description 两数之和
  * @Author Oneby
  * @Date 2020/12/26 20:41
  * @Version 1.0
@@ -53,7 +53,7 @@ public class TwoSum {
         public int[] twoSum(int[] arr, int target) {
             HashMap<Integer, Integer> valueToIndex = new HashMap<>();
 
-            for (int i = 0; i < arr.length; i++) {
+            /*for (int i = 0; i < arr.length; i++) {
                 // arr[i] + remain = target
                 int remain = target - arr[i];
                 // 如果存在于 HashMap 之中，就返回数组下标
@@ -64,8 +64,19 @@ public class TwoSum {
                 valueToIndex.put(arr[i], i);
             }
 
+            return null;*/
+            for (int i = 0; i < arr.length; i++) {
+                int another = target - arr[i];
+                if(valueToIndex.containsKey(another)) {
+                    return new int[]{valueToIndex.get(another), i};
+                }else {
+                    valueToIndex.put(arr[i], i);
+                }
+            }
             return null;
         }
     }
+
+
 
 }
