@@ -3,6 +3,11 @@ package com.oneby.leetcode;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ *
+ * 26. 删除有序数组中的重复项
+ * 这里面是有序的，已经排好队了，只要不与前一个相同就加入新的数组
+ */
 public class RemoveArrayDuplicates {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -17,6 +22,7 @@ public class RemoveArrayDuplicates {
                 nums[k++] = x;
             }
         }
+        Arrays.stream(nums).forEach(System.out::println);
         return k;
     }
 }
