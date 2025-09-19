@@ -16,7 +16,7 @@ public class RedisUtils {
 
     private static JedisPool jedisPool;
 
-    private static String hostAddr = "192.168.152.233";
+    private static String hostAddr = "192.168.56.10";
 
     static {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
