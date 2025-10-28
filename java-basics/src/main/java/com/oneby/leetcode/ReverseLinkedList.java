@@ -29,7 +29,9 @@ public class ReverseLinkedList {
         ListNode prev = null;
         //define next to store current's next
         while (current != null) {
+            //先保存current.next，以为后面这个指针就要没了
             ListNode next = current.next;
+            // prev 向前移动时，需要吧之前的prev的值用掉才能覆盖；同时这里是指针重建，原来current.next的指针指向下一个，现在需要指向前一个
             current.next = prev;
             prev = current;
             current = next;
@@ -52,6 +54,7 @@ public class ReverseLinkedList {
                     return dummy.next;
                 }
             }
+            //注意for循环走完，cur为这一组的最后一个节点
             // 翻转当前组
             //node是当前组的第一个节点（即 pre.next）。
             ListNode node = pre.next;
