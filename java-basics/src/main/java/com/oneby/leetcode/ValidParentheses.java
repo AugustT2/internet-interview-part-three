@@ -1,5 +1,7 @@
 package com.oneby.leetcode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 import java.util.HashMap;
 
@@ -52,5 +54,22 @@ public class ValidParentheses {
         for (String test : testCases) {
             System.out.println("\"" + test + "\" -> " + solution.isValid(test));
         }
+    }
+
+    //不用Map实现
+    public boolean isValid2(String s) {
+        Deque<Character> stk = new ArrayDeque<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stk.push(c);
+            } else if (stk.isEmpty() || !match(stk.pop(), c)) {
+                return false;
+            }
+        }
+        return stk.isEmpty();
+    }
+
+    private boolean match(char l, char r) {
+        return (l == '(' && r == ')') || (l == '{' && r == '}') || (l == '[' && r == ']');
     }
 }
