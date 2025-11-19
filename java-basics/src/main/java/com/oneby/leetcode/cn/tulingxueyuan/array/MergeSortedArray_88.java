@@ -12,6 +12,36 @@ import java.util.Arrays;
  */
 public class MergeSortedArray_88 {
 
+    /**
+     * 因为 nums1的后半部分是空的，如果我们从前往后比较并放置元素，会覆盖掉 nums1中尚未比较的元素。所以，我们应该 从后向前放置元素，这样就不会发生覆盖问题。
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        // 初始化三个指针
+        int p1 = m - 1;      // 指向nums1有效元素的末尾
+        int p2 = n - 1;      // 指向nums2的末尾
+        int p = m + n - 1;   // 指向nums1的末尾
+
+        // 从后向前比较合并
+        while (p1 >= 0 && p2 >= 0) {
+            if (nums1[p1] > nums2[p2]) {
+                nums1[p--] = nums1[p1--];  // 简写：先赋值，再移动指针
+            } else {
+                nums1[p--] = nums2[p2--];  // 同上
+            }
+        }
+
+        // 处理nums2剩余元素
+        while (p2 >= 0) {
+            nums1[p--] = nums2[p2--];
+        }
+        // 上面的循环可以简写为：System.arraycopy(nums2, 0, nums1, 0, p2 + 1);
+    }
+
+
     /*数组合并在一起后，再进行排序,时间复杂度来为O((m+n)log(m+n))，空间复杂度为：O(log(m+n))*/
     public static void mergeNormal(int[] nums1, int m, int[] nums2, int n) {
         for (int i = 0; i< n; ++i) {
@@ -63,6 +93,8 @@ public class MergeSortedArray_88 {
         int[] nums1  = {1,2,3,0,0,0};
         int[] nums2  = {2,5,6};
         int m=3,n=3;
+        merge(nums1,m,nums2,n);
+        System.out.println(Arrays.toString(nums1));
         mergeFastLessSpace(nums1,m,nums2,n);
         for(int e:nums1){
             System.out.print(e);
