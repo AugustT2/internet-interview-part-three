@@ -12,6 +12,51 @@ package com.oneby.leetcode.cn.tulingxueyuan.array;
  */
 public class MissNumber_offer53II {
 
+    /**
+     * 为什么 left 就是缺失的数字？  举例子出来的结论
+     * 1. 循环不变量
+     * 在整个二分过程中，我们保持以下性质：
+     *
+     * left 左边的所有位置 i 都满足 nums[i] == i（没有缺失）
+     *
+     * right 右边的所有位置 i 都满足 nums[i] != i（已经缺失）
+     * 以 nums = [0,1,3]，数组长度=3，n=4 为例：
+     * 第1轮：left=0, right=2
+     *
+     * mid = 1, nums[1]=1 == 1 ✅ → 缺失在右边
+     *
+     * left = 2, right = 2
+     *
+     * 第2轮：left=2, right=2
+     *
+     * mid = 2, nums[2]=3 != 2 ❌ → 缺失在左边
+     *
+     * left = 2, right = 1
+     *
+     * 循环结束：left=2, right=1 (left > right)
+     *
+     * 返回 left=2 ✅
+     * @param nums
+     * @return
+     */
+    public static int findMissedNum(int[] nums) {
+        if( nums == null || nums.length == 0) return -1;
+        int left = 0;
+        int right = nums.length-1;
+        while (left<= right) {
+            int mid = left + (right - left)/2;
+            if(nums[mid] == mid) {
+                //mid之前的都没缺
+                left = mid + 1;
+            } else {
+                //前面有缺的数字
+                right = mid -1;
+            }
+        }
+        return left;
+    }
+
+    //注意：下面的mid计算不好，如果左右都特别大会int越界，正确的写法是mid= left+(right-left)/2;
     public static int missNumber(int[] nums){
         if (nums == null||nums.length==0) return -1;
         int startIndex = 0;
