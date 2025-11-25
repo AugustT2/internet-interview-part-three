@@ -28,8 +28,19 @@ public class RemoveDuplicates_83 {
     /*递归处理,在本质上其实就是将链表压栈后倒序处理了*/
     public ListNode deleteDuplicatesRecursive(ListNode head) {
         if(head == null || head.next == null) return head;
-        head.next = deleteDuplicates(head.next);
+        head.next = deleteDuplicatesRecursive(head.next);
         return head.val == head.next.val ? head.next : head;
+    }
+
+    public static void main(String[] args) {
+        ListNode listNode = new ListNode(1, new ListNode(3, new ListNode(3, new ListNode(4, new ListNode(5)))));
+        RemoveDuplicates_83 removeDuplicates83 = new RemoveDuplicates_83();
+        ListNode result = removeDuplicates83.deleteDuplicates(listNode);
+        while (null != result) {
+            System.out.print(result.val);
+            if(null != result.next)System.out.print("->");
+            result = result.next;
+        }
     }
 
 }
