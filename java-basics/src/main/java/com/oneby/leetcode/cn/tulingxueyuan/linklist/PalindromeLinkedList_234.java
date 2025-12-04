@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class PalindromeLinkedList_234 {
     public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        // 1. 使用快慢指针找到中点，快的速度是慢点两倍，快的跑到最后一个节点的时候，slow刚刚好是一半也就是中点
         ListNode fast = head, slow = head;
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
