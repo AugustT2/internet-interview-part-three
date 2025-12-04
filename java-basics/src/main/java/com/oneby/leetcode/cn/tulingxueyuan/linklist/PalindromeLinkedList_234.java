@@ -1,5 +1,8 @@
 package com.oneby.leetcode.cn.tulingxueyuan.linklist;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ：Mark老师
  * @description ：(LeetCode-234) 回文链表
@@ -40,5 +43,31 @@ public class PalindromeLinkedList_234 {
             head = next;
         }
         return prev;
+    }
+
+    /**
+     * 数组 + 双指针,简单
+     */
+    public boolean isPalindrome2(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        ListNode current = head;
+
+        // 将链表值存入数组
+        while (current != null) {
+            list.add(current.val);
+            current = current.next;
+        }
+
+        // 双指针判断回文
+        int left = 0, right = list.size() - 1;
+        while (left < right) {
+            if (!list.get(left).equals(list.get(right))) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
     }
 }
