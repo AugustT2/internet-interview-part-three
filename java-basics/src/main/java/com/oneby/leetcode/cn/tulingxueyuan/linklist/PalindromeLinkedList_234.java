@@ -21,7 +21,8 @@ public class PalindromeLinkedList_234 {
             fast = fast.next.next;
             slow = slow.next;
         }
-        /*如果链表是奇数个结点，把正中的归到左边*/
+        /*fast不为null，说明是奇数,如果链表是奇数个结点，把正中的归到左边*/
+        //其实不加下面的这个奇数偶数判断也行，就是中间节点也被反转了，但是前后都有中间节点，多比较一次，效率稍微低一丢丢
         if (fast != null) {
             slow = slow.next;
         }
@@ -39,6 +40,9 @@ public class PalindromeLinkedList_234 {
     }
 
     /*反转链表*/
+    //
+
+    //你的代码修改了原head指针， 建议用最下面的反转链表的方式，不修改原链表
     public ListNode reverse(ListNode head) {
         ListNode prev = null;
         while (head != null) {
@@ -74,5 +78,94 @@ public class PalindromeLinkedList_234 {
         }
 
         return true;
+    }
+
+
+    /**
+     * 例子1：奇数链表 1→2→3→2→1
+     * 原代码逻辑：
+     * slow指向3
+     * 反转：3→2→1 变为 1→2→3
+     * 比较：
+     * p1: 1→2→3→2→1
+     * p2: 1→2→3
+     * 比较过程：
+     * 1=1, 2=2, 3=3 ✓
+     * 结束（p2到null，但p1还有2→1没比较）
+     *
+     * 优化后的逻辑：
+     * fast不为null，说明是奇数
+     * slow = slow.next (slow从3移动到2)
+     * 反转：2→1 变为 1→2
+     * 比较：
+     * p1: 1→2→3→2→1
+     * p2: 1→2
+     * 比较过程：
+     * 1=1, 2=2 ✓
+     *
+     *
+     * 例子2：偶数链表 1→2→2→1
+     * 两种情况处理相同：
+     * slow指向第二个2
+     * 反转：2→1 变为 1→2
+     * 比较：
+     * p1: 1→2→2→1
+     * p2: 1→2
+     * 比较过程：
+     * 1=1, 2=2 ✓
+     */
+
+    public boolean isPalindromeHuiFu(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        // 1. 找到中点
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // 2. 判断链表长度奇偶
+        // 如果fast不为null，说明链表长度为奇数
+        // 如果fast为null，说明链表长度为偶数
+        if (fast != null) {
+            // 奇数长度，slow正好在中间节点
+            // 我们需要跳过中间节点，从它的下一个开始反转
+            slow = slow.next;
+        }
+
+        // 3. 反转后半部分
+        ListNode secondHalf = reverseList(slow);
+
+        // 4. 比较前后两部分
+        ListNode p1 = head;
+        ListNode p2 = secondHalf;
+
+        while (p2 != null) {
+            if (p1.val != p2.val) {
+                return false;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+
+        // 5. 恢复链表（可选）
+        reverseList(secondHalf);
+
+        return true;
+    }
+
+    private ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
+        }
+        return prev;
     }
 }
