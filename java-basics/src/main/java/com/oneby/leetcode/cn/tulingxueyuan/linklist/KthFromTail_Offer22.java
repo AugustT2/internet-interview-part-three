@@ -9,6 +9,46 @@ package com.oneby.leetcode.cn.tulingxueyuan.linklist;
  */
 public class KthFromTail_Offer22 {
 
+    /**
+     *步骤图解
+     * 链表: 1 -> 2 -> 3 -> 4 -> 5, k = 2
+     *
+     * 步骤1: fast先走2步
+     * slow: 1
+     * fast: 1 → 2 → 3
+     *
+     * 步骤2: 同时移动
+     * slow: 1 → 2 → 3 → 4
+     * fast: 3 → 4 → 5 → null
+     *
+     * 结束: slow指向4，即倒数第2个节点
+     */
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        if (head == null || k <= 0) {
+            return null;
+        }
+
+        ListNode fast = head;
+        ListNode slow = head;
+
+        // 快指针先走k步
+        for (int i = 0; i < k; i++) {
+            if (fast == null) {
+                return null;  // 如果链表长度小于k，返回null
+            }
+            fast = fast.next;
+        }
+
+        // 快慢指针同时前进，直到快指针到达末尾
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        return slow;  // 慢指针指向倒数第k个节点
+    }
+
+    //这个没有上面这个好理解
     public static ListNode kthNodeFromEnd(ListNode head , int kthNode){
         if ( kthNode <= 0 || head == null) return null;
         ListNode pTemp = head, pKthNode = null;
